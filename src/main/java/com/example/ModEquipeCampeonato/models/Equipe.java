@@ -18,8 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Equipe {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	private long idEquipe;
+	private long id;
 
 	private String nomeEquipe;
 	private String tag;
@@ -30,7 +29,7 @@ public class Equipe {
 
 	public Equipe(long idEquipe, String nomeEquipe, String tag, List<Jogador> listJogadores) {
 		super();
-		this.idEquipe = idEquipe;
+		this.id = idEquipe;
 		this.nomeEquipe = nomeEquipe;
 		this.tag = tag;
 		this.listJogadores = listJogadores;
@@ -42,11 +41,11 @@ public class Equipe {
 	}
 
 	public long getIdEquipe() {
-		return idEquipe;
+		return id;
 	}
 
 	public void setIdEquipe(long idEquipe) {
-		this.idEquipe = idEquipe;
+		this.id = idEquipe;
 	}
 
 	public String getNomeEquipe() {
