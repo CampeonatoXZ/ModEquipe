@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,7 +27,8 @@ public class Jogador {
 	private String email;
 	private Date dt_nascimento;
 	private String nickNameJogo;
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	
+	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JsonBackReference
 	private Equipe equipe;
 
