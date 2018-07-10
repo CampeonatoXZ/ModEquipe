@@ -1,5 +1,7 @@
 package com.example.ModEquipeCampeonato.resource;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ModEquipeCampeonato.models.Equipe;
 import com.example.ModEquipeCampeonato.models.Jogador;
 import com.example.ModEquipeCampeonato.repository.JogadorRepository;
 
 @RestController
 @RequestMapping("/jogador")
+
 public class JogadorResource {
 	
 	@Autowired
@@ -36,6 +40,12 @@ public class JogadorResource {
 		return listaJogadores;
 	}
 	
+	@GetMapping("/{id}")
+	 public Jogador getJogador(@PathVariable Long id)
+	 {
+		return repository.findOne(id);
+	 }
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public void updateJogador(@RequestBody Jogador jogador, @PathVariable("id") long id) {
 		if (id != jogador.getId()) {
@@ -43,7 +53,6 @@ public class JogadorResource {
 		}
 		repository.save(jogador);
 	}
-	
 	
 	@DeleteMapping()
 	public Jogador deletaJogadores(@RequestBody Jogador jogador) {

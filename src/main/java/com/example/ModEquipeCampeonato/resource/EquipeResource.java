@@ -39,8 +39,8 @@ public class EquipeResource {
 		return listaEquipes;
 	}
 	
-	@GetMapping(path = {"/{id}"})
-	public Equipe findOne(@PathVariable("id") String id){
+	@GetMapping("/{id}")
+	public Equipe getEquipe(@PathVariable Long id){
         return repository.findOne(id);
     }
 

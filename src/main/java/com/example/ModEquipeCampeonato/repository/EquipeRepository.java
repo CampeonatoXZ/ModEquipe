@@ -6,6 +6,6 @@ import com.example.ModEquipeCampeonato.models.Equipe;
 
 
 public interface EquipeRepository extends JpaRepository
-<Equipe, String>{
+<Equipe, Long>{
 
 }

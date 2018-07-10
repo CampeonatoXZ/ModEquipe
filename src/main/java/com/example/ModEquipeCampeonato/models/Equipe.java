@@ -1,51 +1,70 @@
 package com.example.ModEquipeCampeonato.models;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
+
 
 @Entity
 @Table(name = "equipes")
-public class Equipe {
+
+public class Equipe   {
+		
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	private String nomeEquipe;
 	private String tag;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JsonManagedReference
-	private List<Jogador> listJogadores;
-
-	public Equipe(long idEquipe, String nomeEquipe, String tag, List<Jogador> listJogadores) {
-		super();
-		this.id = idEquipe;
-		this.nomeEquipe = nomeEquipe;
-		this.tag = tag;
-		this.listJogadores = listJogadores;
-	}
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JsonIgnore
+	@JoinTable(name = "equipe_jogador", joinColumns = @JoinColumn(name = "equipe_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "jogador_id", referencedColumnName = "id"))
+    private List<Jogador> listjogadores = new ArrayList<>();
 
 	public Equipe() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public long getIdEquipe() {
+	public Equipe(long id, String nomeEquipe, String tag, List<Jogador> listJogadores) {
+		super();
+		this.id = id;
+		this.nomeEquipe = nomeEquipe;
+		this.tag = tag;
+		this.listjogadores = listJogadores;
+	}
+
+	public Equipe(String nomeEquipe, String tag, List<Jogador> listJogadores) {
+		super();
+		this.nomeEquipe = nomeEquipe;
+		this.tag = tag;
+		this.listjogadores = listJogadores;
+	}
+	
+	public Equipe(String nomeEquipe, String tag) {
+		super();
+		
+		this.nomeEquipe = nomeEquipe;
+		this.tag = tag;
+		
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setIdEquipe(long idEquipe) {
-		this.id = idEquipe;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNomeEquipe() {
@@ -64,11 +83,30 @@ public class Equipe {
 		this.tag = tag;
 	}
 
-	public List<Jogador> getListJogadores() {
-		return listJogadores;
+	/*public List<Jogador> getListJogadores(){
+		return listjogadores;
+	}*/
+	
+	public List<Long> getListJogadores() {
+		List<Long> nomes = new ArrayList<Long>();
+		
+	for(Jogador jogador : listjogadores) {
+		nomes.add((jogador.getId()));
+	}		
+		return nomes;
 	}
 
 	public void setListJogadores(List<Jogador> listJogadores) {
-		this.listJogadores = listJogadores;
+		this.listjogadores = listJogadores;
 	}
+
+	@Override
+	public String toString() {
+		return "Equipe [id=" + id + ", nomeEquipe=" + nomeEquipe + ", tag=" + tag + ", listjogadores=" + listjogadores
+				+ "]";
+	}
+	
+	
+
+	
 }
